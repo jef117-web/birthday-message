@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ a special wish for you ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b0719 0%, #1f1a3a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+            opacity: 0.5;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 126, 179, 0.2);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(126, 211, 255, 0.15);
+            bottom: -150px;
+            left: -150px;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 30px) scale(1.1); }
+        }
+
+        /* main card */
+        .wish-card {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(20, 15, 45, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 64px;
+            padding: 48px 40px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6),
+                        0 0 0 2px rgba(255, 255, 255, 0.08),
+                        inset 0 0 30px rgba(255, 200, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: cardAppear 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* header sparkle */
+        .sparkle-line {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px #ffa5d2);
+            animation: sparklePulse 3s infinite;
+        }
+
+        @keyframes sparklePulse {
+            0%, 100% { filter: drop-shadow(0 0 15px #ffa5d2); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 30px #ffd0e6); transform: scale(1.02); }
+        }
+
+        /* the main name — this is dynamic */
+        .friend-name {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffe5f0, #ffc8e6, #c5b4ff, #a9d6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(255, 200, 255, 0.5);
+            word-break: break-word;
+            letter-spacing: 2px;
+        }
+
+        .sub-greeting {
+            text-align: center;
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.03);
+            padding: 12px 24px;
+            border-radius: 100px;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* the heartfelt message area */
+        .message-box {
+            background: rgba(10, 5, 25, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 40px 32px;
+            margin: 40px 0 32px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 0 30px rgba(255, 200, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff99cc, #b266ff, #66ccff, #ff99cc);
+            border-radius: 50px;
+            opacity: 0.3;
+            z-index: -1;
+            animation: borderGlow 8s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+        }
+
+        .message-content {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #f0eaff;
+            text-align: center;
+            font-weight: 400;
+            word-break: break-word;
+        }
+
+        .message-content .highlight {
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffcbe4, #d9c0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2rem;
+            display: inline-block;
+        }
+
+        .from-signature {
+            margin-top: 32px;
+            text-align: right;
+            font-size: 1.6rem;
+            color: #cdb5ff;
+            font-style: italic;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+            padding-top: 24px;
+        }
+
+        .from-signature span {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffb7c5, #bf9aff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* little details */
+        .floating-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 2.2rem;
+            margin: 32px 0 10px;
+            opacity: 0.7;
+            animation: floatIcons 6s infinite alternate;
+        }
+
+        @keyframes floatIcons {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .share-note {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 1rem;
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* interactive name setter (subtle, but you can change friend anytime) */
+        .friend-setter {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            background: rgba(0,0,0,0.25);
+            padding: 16px 20px;
+            border-radius: 100px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .friend-setter input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 14px 22px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            color: white;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .friend-setter input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .friend-setter input:focus {
+            border-color: #ff99cc;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .friend-setter button {
+            background: linear-gradient(135deg, #ff99cc, #b266ff);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 20px #ff99cc80;
+        }
+
+        .friend-setter button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #ff99cc;
+        }
+
+        /* small responsive */
+        @media (max-width: 550px) {
+            .wish-card { padding: 30px 20px; }
+            .friend-name { font-size: 3rem; }
+            .message-content { font-size: 1.4rem; }
+            .from-signature { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- animated background orbs & stars -->
+    <div class="stars" id="stars"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+
+    <!-- main card -->
+    <div class="wish-card">
+        <div class="sparkle-line">
+            <span>✨</span> <span>💫</span> <span>🌟</span>
+        </div>
+
+        <!-- friend name appears here big and beautiful -->
+        <div class="friend-name" id="friendNameDisplay">Friend</div>
+        <div class="sub-greeting">you have a wish</div>
+
+        <!-- heartfelt message (personal, from me) -->
+        <div class="message-box">
+            <div class="message-content" id="wishMessage">
+                <!-- dynamic message will be inserted via js -->
+            </div>
+            <div class="from-signature">
+                — with love, <span id="senderNameDisplay">Me</span>
+            </div>
+        </div>
+
+        <!-- floating icons -->
+        <div class="floating-icons">
+            <span>🎂</span> <span>🎈</span> <span>💖</span> <span>✨</span> <span>🌙</span>
+        </div>
+
+        <!-- subtle controls: you can set any friend name and sender — unique and personal -->
+        <div class="friend-setter">
+            <input type="text" id="friendInput" placeholder="friend's name (e.g. Sarah)" value="Friend">
+            <input type="text" id="senderInput" placeholder="your name" value="Me">
+            <button id="updateBtn">create wish</button>
+        </div>
+        <div class="share-note">
+            ⭐ share this link — they'll see a magical message just for them ⭐
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ------------------------------------------------
+            // MAGICAL WISH PAGE — just for one special friend
+            // When you share the link, they see your personal message
+            // ------------------------------------------------
+
+            // get elements
+            const friendNameDisplay = document.getElementById('friendNameDisplay');
+            const wishMessageDiv = document.getElementById('wishMessage');
+            const senderNameDisplay = document.getElementById('senderNameDisplay');
+            const friendInput = document.getElementById('friendInput');
+            const senderInput = document.getElementById('senderInput');
+            const updateBtn = document.getElementById('updateBtn');
+
+            // === THE HEARTFELT MESSAGE (you can edit this anytime) ===
+            // This is the beautiful, unique wish your friend will see.
+            // Change it to whatever you want to say!
+            const baseWish = [
+                "✨ today the universe decided to create someone wonderful:",
+                "you.",
+                "may your day be wrapped in joy, laughter,",
+                "and all the little things that make you smile.",
+                "you deserve the world and more.",
+                "happy birthday, starlight."
+            ].join(' ');  // combines lines into one flowing message
+
+            // helper: update the whole page with current names
+            function updateWish() {
+                // get values from inputs (fallback)
+                let friend = friendInput.value.trim();
+                let sender = senderInput.value.trim();
+
+                if (friend === '') friend = 'Friend';
+                if (sender === '') sender = 'Me';
+
+                // update displayed friend name (big and beautiful)
+                friendNameDisplay.textContent = friend;
+
+                // update sender signature
+                senderNameDisplay.textContent = sender;
+
+                // build the personalized wish message (with friend's name inside)
+                // we insert friend name naturally into the message
+                const personalizedMessage = `
+                    <span class="highlight">${friend}</span>, 
+                    ${baseWish}
+                `;
+
+                // set the html (using innerHTML because we have span.highlight)
+                wishMessageDiv.innerHTML = personalizedMessage;
+
+                // also change page title to make it extra personal
+                document.title = `✨ a wish for ${friend} ✨`;
+            }
+
+            // initial update (with default values)
+            updateWish();
+
+            // when button clicked, update
+            updateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                updateWish();
+                // also animate little sparkle feedback
+                updateBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => updateBtn.style.transform = '', 150);
+            });
+
+            // allow enter key in inputs to trigger update
+            friendInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') updateBtn.click();
+            });
+            senderInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') updateBtn.click();
+            });
+
+            // generate starfield (for extra magic)
+            function createStars() {
+                const starsContainer = document.getElementById('stars');
+                const starCount = 150;
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const size = Math.random() * 4 + 1;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 5 + 's';
+                    star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+            createStars();
+
+            // if you want to read query params (to prefill from link) - nice extra!
+            // that way you can share ?friend=Jessica&sender=Alex
+            function getQueryParams() {
+                const params = new URLSearchParams(window.location.search);
+                const friendParam = params.get('friend');
+                const senderParam = params.get('sender');
+                if (friendParam) friendInput.value = friendParam;
+                if (senderParam) senderInput.value = senderParam;
+                if (friendParam || senderParam) {
+                    updateWish(); // auto update if params exist
+                }
+            }
+            getQueryParams();
+
+            // small extra: if you want the link to be easily shareable,
+            // the button now updates. You can also copy the link with ?friend=name
+            // we could show a "copy shareable link" but not needed for simplicity
+            // but we'll add a gentle instruction: 
+            // you can manually add ?friend=NAME&sender=YOU to the URL
+
+            // final touch: update also on page load if params exist (done)
+
+        })();
+    </script>
+
+    <!-- add a tiny style to make the highlight inside message more graceful -->
+    <style>
+        .message-content .highlight {
+            font-size: 2.2rem;
+            display: inline-block;
+            margin-right: 6px;
+            background: linear-gradient(135deg, #ffe5b4, #ffb3d9, #b8a5ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px #ffa5e0;
+        }
+        .friend-setter input:last-of-type {
+            margin-right: 0;
+        }
+        .friend-setter {
+            flex-wrap: wrap;
+        }
+        @media (max-width: 600px) {
+            .friend-setter button {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+</html>
